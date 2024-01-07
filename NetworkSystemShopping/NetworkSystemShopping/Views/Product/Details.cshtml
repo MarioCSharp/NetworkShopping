@@ -1,0 +1,45 @@
+﻿@using NetworkSystemShopping.Models.Product
+@model ProductDetailsModel
+
+<link href="/css/productDetails.css" rel="stylesheet" />
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+	<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+
+						<div class="preview-pic tab-content">
+							<div class="tab-pane active" id="pic-1"><img src="@Model.Image" /></div>
+						</div>
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">@Model.Name</h3>
+						<div class="rating">
+							<div class="stars">
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+							</div>
+						</div>
+						<p class="product-description">@Model.Description</p>
+						<h4 class="price">Цена: <span>@Model.Price лв</span></h4>
+						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+						<div class="action">
+							<button class="add-to-cart btn btn-default" type="button" asp-action="AddToCar" asp-controller="Product">add to cart</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

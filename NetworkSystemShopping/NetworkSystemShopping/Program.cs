@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using NetworkSystemShopping.Data;
 using NetworkSystemShopping.Data.Models;
 using NetworkSystemShopping.Extensions;
+using NetworkSystemShopping.Services.ProductService;
 
 namespace NetworkSystemShopping
 {
@@ -36,7 +37,7 @@ namespace NetworkSystemShopping
                 options.LoginPath = "/Account/Login";
             });
 
-            builder.Services.AddApplicationServices(typeof(ProblemDetails));
+            builder.Services.AddApplicationServices(typeof(IProductService));
 
             var app = builder.Build();
 
@@ -53,7 +54,8 @@ namespace NetworkSystemShopping
             app.UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseRouting()
-                .UseAuthorization();
+                .UseAuthorization()
+                .Initialize();
 
             app.MapControllerRoute(
                 name: "default",
