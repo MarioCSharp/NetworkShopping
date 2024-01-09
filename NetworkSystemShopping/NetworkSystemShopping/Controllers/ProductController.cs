@@ -32,7 +32,7 @@ namespace NetworkSystemShopping.Controllers
 
             if (!res) return BadRequest();
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NetworkSystemShopping.Data.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace NetworkSystemShopping.Data.Models
 {
@@ -21,5 +22,7 @@ namespace NetworkSystemShopping.Data.Models
         [Required]
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
+        [Required]
+        public ProductType Type { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace NetworkSystemShopping.Models.Product
         [Required]
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
+        [Required]
+        public int Type { get; set; }
     }
 }

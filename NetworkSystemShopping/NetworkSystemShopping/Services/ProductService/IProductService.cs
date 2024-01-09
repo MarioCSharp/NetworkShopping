@@ -7,5 +7,11 @@ namespace NetworkSystemShopping.Services.ProductService
     {
         Task<bool> AddProductAsync(ProductAddModel model, List<IFormFile> Image);
         Task<ProductDetailsModel> GetProductModel(int id);
+        Task<List<ProductDetailsModel>> GetRouters();
+        Task<List<ProductDetailsModel>> GetWirelessNetworkCards();
+        Task<List<ProductDetailsModel>> GetAccessPoints();
+        Task<List<ProductDetailsModel>> GetCables();
+        Task<List<ProductDetailsModel>> GetConnectors();
+        Task<List<ProductDetailsModel>> GetAllProducts();
     }
 }

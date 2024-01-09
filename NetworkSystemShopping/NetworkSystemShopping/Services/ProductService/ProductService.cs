@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using NetworkSystemShopping.Data;
 using NetworkSystemShopping.Data.Models;
+using NetworkSystemShopping.Data.Models.Enums;
 using NetworkSystemShopping.Models.Product;
 
 namespace NetworkSystemShopping.Services.ProductService
@@ -20,6 +22,7 @@ namespace NetworkSystemShopping.Services.ProductService
                 Description = model.Description,
                 Price = model.Price,
                 Quantity = model.Quantity,
+                Type = (ProductType)model.Type,
             };
 
             foreach (var file in Image)
@@ -40,6 +43,57 @@ namespace NetworkSystemShopping.Services.ProductService
             return await context.Products.ContainsAsync(product);
         }
 
+        public async Task<List<ProductDetailsModel>> GetAccessPoints()
+        {
+            return await context.Products
+                .Where(x => x.Type == ProductType.AccessPoint)
+                .Select(x => new ProductDetailsModel()
+                {
+                    Name = x.Name,
+                    Description = x.Description,
+                    Price = x.Price,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
+                }).ToListAsync();
+        }
+
+        public async Task<List<ProductDetailsModel>> GetAllProducts()
+        {
+            return await context.Products
+                .Select(x => new ProductDetailsModel()
+                {
+                    Name = x.Name,
+                    Description = x.Description,
+                    Price = x.Price,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
+                }).ToListAsync();
+        }
+
+        public async Task<List<ProductDetailsModel>> GetCables()
+        {
+            return await context.Products
+                .Where(x => x.Type == ProductType.Cables)
+                .Select(x => new ProductDetailsModel()
+                {
+                    Name = x.Name,
+                    Description = x.Description,
+                    Price = x.Price,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
+                }).ToListAsync();
+        }
+
+        public async Task<List<ProductDetailsModel>> GetConnectors()
+        {
+            return await context.Products
+                .Where(x => x.Type == ProductType.Connector)
+                .Select(x => new ProductDetailsModel()
+                {
+                    Name = x.Name,
+                    Description = x.Description,
+                    Price = x.Price,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
+                }).ToListAsync();
+        }
+
         public async Task<ProductDetailsModel> GetProductModel(int id)
         {
             var product = await context.Products.FindAsync(id);
@@ -56,6 +110,32 @@ namespace NetworkSystemShopping.Services.ProductService
                 Price = product.Price,
                 Image = imgSrc
             };
+        }
+
+        public async Task<List<ProductDetailsModel>> GetRouters()
+        {
+            return await context.Products
+                .Where(x => x.Type == ProductType.Router)
+                .Select(x => new ProductDetailsModel()
+                {
+                    Name = x.Name,
+                    Description = x.Description,
+                    Price = x.Price,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
+                }).ToListAsync();
+        }
+
+        public async Task<List<ProductDetailsModel>> GetWirelessNetworkCards()
+        {
+            return await context.Products
+                .Where(x => x.Type == ProductType.WirelessNetworkCard)
+                .Select(x => new ProductDetailsModel()
+                {
+                    Name = x.Name,
+                    Description = x.Description,
+                    Price = x.Price,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
+                }).ToListAsync();
         }
     }
 }
