@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetworkSystemShopping.Models.Store;
 using NetworkSystemShopping.Services.ProductService;
 
 namespace NetworkSystemShopping.Controllers
@@ -13,7 +14,18 @@ namespace NetworkSystemShopping.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await productService.GetAllProducts());
+            return View(new StoreModel
+            {
+                Products = await productService.GetAllProducts(null)
+            });
+        }
+        [HttpPost]
+        public async Task<IActionResult> Index(StoreModel query)
+        {
+            return View(new StoreModel
+            {
+                Products = await productService.GetAllProducts(query)
+            });
         }
 
         [HttpGet]

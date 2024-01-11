@@ -1,48 +1,125 @@
-﻿@using NetworkSystemShopping.Models.Product
-@model IEnumerable<ProductDetailsModel>
+﻿@using NetworkSystemShopping.Models.Store
+@model StoreModel
 
-<link href="/css/allProductsPage.css" rel="stylesheet" />
-<section class="section-products">
-	<div class="container">
-		<div class="row justify-content-center text-center">
-			<div class="col-md-8 col-lg-6">
-				<div class="header">
-					<h3>Featured Product</h3>
-					<h2>Popular Products</h2>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<!-- Single Product -->
-			@foreach (var product in Model)
-			{
-				<div class="col-md-6 col-lg-4 col-xl-3">
-					<div id="product-@product.Name" style="background: url(@product.Image) no-repeat center;
-						 background-size: cover;
-						 transition: all 0.3s;
-						 height:290px;
-						 width: 290px" class="single-product">
-						<div class="part-1">
-							<ul>
-								<li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-								<li><a href="#"><i class="fas fa-heart"></i></a></li>
-								<li><a href="#"><i class="fas fa-plus"></i></a></li>
-								<li><a href="#"><i class="fas fa-expand"></i></a></li>
-							</ul>
-						</div>
-						<div class="part-2">
-							<h3 class="product-title">@product.Name</h3>
-							<h4 class="product-price">@product.Price лв</h4>
-						</div>
-					</div>
-				</div>
-			}
-		</div>
-	</div>
+<section style="background-color: #eee;">
+    <form method="post">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <div class="form-group">
+                    <label asp-for="PriceRange"></label>
+                    <select asp-for="PriceRange" class="form-control">
+                        <option value="All">Всички</option>
+                        <option value="0-50">0-50</option>
+                        <option value="50-100">50-100</option>
+                        <option value="100-300">100-300</option>
+                        <option value="300-1000">300-1000</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label asp-for="Brand"></label>
+                <input asp-for="Brand" class="form-control" placeholder="BMW 640D, etc...">
+            </div>
+
+            <div class="form-group col-md-4">
+                <div class="form-group">
+                    <label asp-for="OrderBy"></label>
+                    <select asp-for="OrderBy" class="form-control">
+                        <option value="PriceLow" selected>Най-ниска цена</option>
+                        <option value="PriceHigh">Най-висока цена</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="container py-5">
+        @foreach (var product in Model.Products)
+        {
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-12 col-xl-10">
+                    <div class="card shadow-0 border rounded-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                        <img src="@product.Image"
+                                             class="w-100" />
+                                        <a href="#!">
+                                            <div class="hover-overlay">
+                                                <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <h5>@product.Name</h5>
+                                    <div class="d-flex flex-row">
+                                        <div class="text-danger mb-1 me-2">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <span>310</span>
+                                    </div>
+                                    <div class="mt-1 mb-0 text-muted small">
+                                        <span>100% cotton</span>
+                                        <span class="text-primary"> • </span>
+                                        <span>Light weight</span>
+                                        <span class="text-primary"> • </span>
+                                        <span>Best finish<br /></span>
+                                    </div>
+                                    <div class="mb-2 text-muted small">
+                                        <span>Unique design</span>
+                                        <span class="text-primary"> • </span>
+                                        <span>For men</span>
+                                        <span class="text-primary"> • </span>
+                                        <span>Casual<br /></span>
+                                    </div>
+                                    <p class="text-truncate mb-4 mb-md-0">
+                                        @product.Description
+                                    </p>
+                                </div>
+                                <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                    <div class="d-flex flex-row align-items-center mb-1">
+                                        <h4 class="mb-1 me-1">@product.Price лв</h4>
+                                    </div>
+                                    <h6 class="text-success">Безплатна доставка</h6>
+                                    <div class="d-flex flex-column mt-4">
+                                        <a class="btn btn-primary btn-sm" type="button" asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">Детайли</a>
+                                        <a class="btn btn-outline-primary btn-sm mt-2" type="button" asp-action="AddToCart" asp-controller="Product" asp-route-id="@product.Id">
+                                            Купи
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </section>
 
-@section Scripts{
-	<script>
-
-	</script>
+@section Scripts {
+    <script>
+    </script>
 }
+
+
+<style>
+    .products {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+    }
+</style>

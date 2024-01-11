@@ -109,7 +109,7 @@ img {
 }
 
     .checked, .price span {
-        color: #ff9f1a;
+        color: #0000FF;
     }
 
 .product-title, .rating, .product-description, .price, .vote, .sizes {
@@ -142,7 +142,7 @@ img {
     }
 
 .add-to-cart, .like {
-    background: #ff9f1a;
+    background: #0000FF;
     padding: 1.2em 1.5em;
     border: none;
     text-transform: UPPERCASE;
@@ -153,7 +153,7 @@ img {
 }
 
     .add-to-cart:hover, .like:hover {
-        background: #b36800;
+        background: #0000FF;
         color: #fff;
     }
 
@@ -169,15 +169,15 @@ img {
     }
 
 .orange {
-    background: #ff9f1a;
+    background: #0000FF;
 }
 
 .green {
-    background: #85ad00;
+    background: #0000FF;
 }
 
 .blue {
-    background: #0076ad;
+    background: #0000FF;
 }
 
 .tooltip-inner {

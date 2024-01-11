@@ -1,5 +1,5 @@
 ﻿using NetworkSystemShopping.Models.Product;
-using static System.Net.Mime.MediaTypeNames;
+using NetworkSystemShopping.Models.Store;
 
 namespace NetworkSystemShopping.Services.ProductService
 {
@@ -12,6 +12,6 @@ namespace NetworkSystemShopping.Services.ProductService
         Task<List<ProductDetailsModel>> GetAccessPoints();
         Task<List<ProductDetailsModel>> GetCables();
         Task<List<ProductDetailsModel>> GetConnectors();
-        Task<List<ProductDetailsModel>> GetAllProducts();
+        Task<List<ProductDetailsModel>> GetAllProducts(StoreModel filter);
     }
 }

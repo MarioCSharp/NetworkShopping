@@ -4,6 +4,7 @@ using NetworkSystemShopping.Data;
 using NetworkSystemShopping.Data.Models;
 using NetworkSystemShopping.Data.Models.Enums;
 using NetworkSystemShopping.Models.Product;
+using NetworkSystemShopping.Models.Store;
 
 namespace NetworkSystemShopping.Services.ProductService
 {
@@ -56,16 +57,81 @@ namespace NetworkSystemShopping.Services.ProductService
                 }).ToListAsync();
         }
 
-        public async Task<List<ProductDetailsModel>> GetAllProducts()
+        public async Task<List<ProductDetailsModel>> GetAllProducts(StoreModel filter)
         {
-            return await context.Products
+            var list = await context.Products
                 .Select(x => new ProductDetailsModel()
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
                     Price = x.Price,
                     Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(x.Image))
                 }).ToListAsync();
+
+            if (filter is null)
+            {
+                return list;
+            }
+
+            if (!string.IsNullOrEmpty(filter.PriceRange) && filter.PriceRange != "All")
+            {
+                var priceRangeLow = "";
+                var priceRangeHigh = "";
+                var found = false;
+
+                for (int i = 0; i < filter.PriceRange.Length; i++)
+                {
+                    if (filter.PriceRange[i] == '-')
+                    {
+                        found = true; continue;
+                    }
+                    if (!found)
+                    {
+                        priceRangeLow += filter.PriceRange[i].ToString();
+                    }
+                    else
+                    {
+                        priceRangeHigh += filter.PriceRange[i].ToString();
+                    }
+                }
+
+                var priceRangeLowToNumber = double.Parse(priceRangeLow);
+                var priceRangeHighToNumber = double.Parse(priceRangeHigh);
+
+                list = list
+                    .Where
+                    (
+                        x => x.Price >= priceRangeLowToNumber &&
+                        x.Price <= priceRangeHighToNumber)
+                    .ToList();
+            }
+            if (!string.IsNullOrEmpty(filter.OrderBy))
+            {
+                if (filter.OrderBy == "PriceLow")
+                {
+                    list = list
+                    .OrderBy
+                    (x => x.Price)
+                    .ToList();
+                }
+                else if (filter.OrderBy == "PriceHigh")
+                {
+                    list = list
+                    .OrderByDescending
+                    (x => x.Price)
+                    .ToList();
+                }
+            }
+            if (!string.IsNullOrEmpty(filter.Brand))
+            {
+                list = list
+                    .Where
+                    (x => x.Name.ToLower().Contains(filter.Brand.ToLower()))
+                    .ToList();
+            }
+
+            return list;
         }
 
         public async Task<List<ProductDetailsModel>> GetCables()
@@ -105,6 +171,7 @@ namespace NetworkSystemShopping.Services.ProductService
 
             return new ProductDetailsModel
             {
+                Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
